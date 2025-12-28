@@ -566,14 +566,18 @@ void vAufgabe_6a()
 	// Ausgeben mit Aktualisierung der Liste
 	for(auto it = vListe.begin(); it != vListe.end(); it++)
 	{
-		std::cout << (*it) << " ";
+		cout << (*it) << " ";
 	}
 	cout << endl << endl;
 
 	// Ausgeben ohne Aktualisierung der Liste
 	for(auto it = vListe.begin(); it != vListe.end(); it++)
 	{
-			if ((*it) < 5) vListe.erase(it);
+		if ((*it) > 5) vListe.erase(it);
+	}
+	for(auto it = vListe.begin(); it != vListe.end(); it++)
+	{
+		cout << (*it) << " ";
 	}
 	cout << endl << endl;
 
@@ -581,9 +585,9 @@ void vAufgabe_6a()
 
 	// Ausgeben mit Aktualisierung der Liste
 	for(auto it = vListe.begin(); it != vListe.end(); it++)
-		{
-				if ((*it) < 5) vListe.erase(it);
-		}
+	{
+		cout << (*it) << " ";
+	}
 	cout << endl << endl;
 
 	vListe.push_front(dist(device));
@@ -591,9 +595,9 @@ void vAufgabe_6a()
 
 	// Ausgeben ohne Aktualisierung der Liste
 	for(auto it = vListe.begin(); it != vListe.end(); it++)
-			{
-					if ((*it) < 5) vListe.erase(it);
-			}
+	{
+		cout << (*it) << " ";
+	}
 	cout << endl << endl;
 
 	// Liste aktualisieren
@@ -601,10 +605,13 @@ void vAufgabe_6a()
 
 	// Ausgeben mit Aktualisierung der Liste
 	for(auto it = vListe.begin(); it != vListe.end(); it++)
-			{
-					if ((*it) < 5) vListe.erase(it);
-			}
+	{
+		cout << (*it) << " ";
+	}
+	cout << endl << endl;
 }
+
+
 
 //////////////////
 ////Aufgabe 7/////
