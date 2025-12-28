@@ -316,59 +316,59 @@ void vAufgabe_2()
 //////////////////
 void vAufgabe_3()
 {
-	    // Dynamischer Speicher für die Fahrzeuge --> Garage
-	    vector<std::unique_ptr<Fahrzeug>> garage;
+	// Dynamischer Speicher für die Fahrzeuge --> Garage
+	vector<std::unique_ptr<Fahrzeug>> garage;
 
-	    Fahrzeug* pkw = new PKW("Porsche 911", 320, 10.9, 204.0);
-		Fahrzeug* fahrrad = new Fahrrad("BMX", 35);
+	Fahrzeug* pkw = new PKW("Porsche 911", 320, 10.9, 204.0);
+	Fahrzeug* fahrrad = new Fahrrad("BMX", 35);
 
-		garage.push_back(std::unique_ptr<Fahrzeug>(pkw));
-		garage.push_back(std::unique_ptr<Fahrzeug>(fahrrad));
+	garage.push_back(std::unique_ptr<Fahrzeug>(pkw));
+	garage.push_back(std::unique_ptr<Fahrzeug>(fahrrad));
 
-		// Nutzung des überladenen Operators <<
+	// Nutzung des überladenen Operators <<
+	Fahrzeug::vKopf();
+	cout << *pkw << endl;
+	cout << *fahrrad << endl;
+
+	const double dTankZeit = 3.0;
+	const double epsilon = 0.000001;
+
+	for (double i=0; i<iStunden; i+=dZeittakt)
+	{
+		dGlobaleZeit += dZeittakt;
+		cout << endl << endl << setw(20) << setfill('-') << "-" << setfill(' ') << endl;
+		cout << "Globale-Zeit: " << dGlobaleZeit*60 << " min" << endl;
+		cout << setw(20) << setfill('-') << "-" << setfill(' ') << endl << endl;
+
 		Fahrzeug::vKopf();
-		cout << *pkw << endl;
-		cout << *fahrrad << endl;
 
-		const double dTankZeit = 3.0;
-		const double epsilon = 0.000001;
-
-		for (double i=0; i<iStunden; i+=dZeittakt)
+		// Iterator um auf jeden Vektor zuzugreifen ohne Fehler (Pi1)
+		for (auto it = garage.begin(); it != garage.end(); it++)
 		{
-			dGlobaleZeit += dZeittakt;
-			cout << endl << endl << setw(20) << setfill('-') << "-" << setfill(' ') << endl;
-			cout << "Globale-Zeit: " << dGlobaleZeit*60 << " min" << endl;
-			cout << setw(20) << setfill('-') << "-" << setfill(' ') << endl << endl;
+			(*it)->vSimulieren();
+			cout << *it->get();
 
-			Fahrzeug::vKopf();
+			// Beide Werte sind double Werte also gibt es eine kleine Abweichung. Ist diese Abweichung sehr klein, kann man sie einfach als 3 km runden
+			if (std::fmod(dGlobaleZeit, dTankZeit) < epsilon) (*it)->dTanken(); // dGlobaleZeit modulo dTamkZeit = 0
+		}
 
-			// Iterator um auf jeden Vektor zuzugreifen ohne Fehler (Pi1)
-			for (auto it = garage.begin(); it != garage.end(); it++)
-			{
-				(*it)->vSimulieren();
-				cout << *it->get();
+		if(*pkw < *fahrrad)
+		{
+			cout << "\nDer Fahrradfahrer hat insgesamt mehr zurückgelegt als den Autofahrer\n" << endl;
+		}
+		else
+		{
+			cout << "\nDer Autofahrer hat insgesamt mehr zurückgelegt als den Fahrradfahrer\n" << endl;
+		}
+	 }
+	// Nutzung des überladenen Operators (=) und (<<)
+	Fahrzeug fahrrad2("E-Bike", 35);
+	Fahrzeug fahrrad3;
+	fahrrad3 = fahrrad2;
 
-				// Beide Werte sind double Werte also gibt es eine kleine Abweichung. Ist diese Abweichung sehr klein, kann man sie einfach als 3 km runden
-				if (std::fmod(dGlobaleZeit, dTankZeit) < epsilon) (*it)->dTanken(); // dGlobaleZeit modulo dTamkZeit = 0
-			}
-
-			if(*pkw < *fahrrad)
-			{
-				cout << "\nDer Fahrradfahrer hat insgesamt mehr zurückgelegt als den Autofahrer\n" << endl;
-			}
-			else
-			{
-				cout << "\nDer Autofahrer hat insgesamt mehr zurückgelegt als den Fahrradfahrer\n" << endl;
-			}
-         }
-		// Nutzung des überladenen Operators (=) und (<<)
-		Fahrzeug fahrrad2("E-Bike", 35);
-		Fahrzeug fahrrad3;
-		fahrrad3 = fahrrad2;
-
-		Fahrzeug::vKopf();
-		cout << fahrrad2 << endl;
-		cout << fahrrad3 << endl;
+	Fahrzeug::vKopf();
+	cout << fahrrad2 << endl;
+	cout << fahrrad3 << endl;
 }
 
 //////////////////
