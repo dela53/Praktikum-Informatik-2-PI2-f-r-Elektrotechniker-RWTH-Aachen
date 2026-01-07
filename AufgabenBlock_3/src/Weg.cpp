@@ -3,6 +3,7 @@
 #include "Tempolimit.h"
 #include "Fahrzeug.h"
 #include "PKW.h"
+#include "Fahrrad.h"
 #include "Fahrausnahme.h"
 #include "vertagt_liste.h"
 
@@ -46,7 +47,11 @@ void Weg::vSimulieren()
 
 				if (auto pkw = dynamic_cast<PKW*>(it->get())) // sucht einen spezifischen Typ PKW. it->get() gibt den Zeiger des Zeigers zurück ohne was zu verändern
 				{
-					if (pkw->getTankinhalt() <= 0.0) bBlockiert = true;
+					if (pkw->getTankinhalt() > 0.0) bBlockiert = true;
+				}
+				else if (dynamic_cast<Fahrrad*>(it->get())) // sucht einen spezifischen Typ PKW. it->get() gibt den Zeiger des Zeigers zurück ohne was zu verändern
+				{
+					bBlockiert = true;
 				}
 				if (bBlockiert)
 				{
@@ -245,7 +250,6 @@ void Weg::vEinlesen(std::istream& c)
 	// wirft einen Fehler wenn Name schon gesetzt ist
 	if (!c) throw std::runtime_error("Weg::vEinlesen: Name wurde schon gesetzt.");
 }
-
 
 // Überladung des << Operators
 std::ostream& operator<<(std::ostream& o, Weg& weg)
